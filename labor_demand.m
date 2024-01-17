@@ -17,8 +17,8 @@ function [LSH, LD_HH, LD_LH, LD_IH, LSL, LD_HL, LD_LL, LD_IL] = labor_demand(wH,
     LzH =  IzH .*commonExp1;
     HzH =  IzH .*commonExp2;
     profitH = p.avecH.*kappa.*(   ( ( ((IzH.^gamma).*b + (LzH.^gamma)).*a).^(rho/gamma) + HzH.^rho ).^(alpha/rho)) - (HzH.*wH + LzH.*wL + IzH.*wI);
-    wvecH = wH * ones(length(profitH), 1);
-    LSH = sum(wvecH > profitH);
+
+    LSH = sum(wH > profitH);
 
     LD_HH = sum(HzH(profitH > wH));
     LD_LH = sum(LzH(profitH > wH));
@@ -29,8 +29,8 @@ function [LSH, LD_HH, LD_LH, LD_IH, LSL, LD_HL, LD_LL, LD_IL] = labor_demand(wH,
     LzL =  IzL .*commonExp1;
     HzL =  IzL .*commonExp2;
     profitL = p.avecL.*(   ( ( ((IzL.^gamma).*b + (LzL.^gamma)).*a).^(rho/gamma) + HzL.^rho ).^(alpha/rho)) - (HzL.*wH + LzL.*wL + IzL.*wI);
-    wvecL = wL * ones(length(profitL), 1);
-    LSL = sum(wvecL > profitL);
+
+    LSL = sum(wL > profitL);
 
     LD_HL = sum(HzL(profitL > wL));
     LD_LL = sum(LzL(profitL > wL));
