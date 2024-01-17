@@ -1,7 +1,7 @@
 %% parameters, settings and moments
 clear all
 
-LE = 4;
+LE = 2;
 rho_grid    = linspace(0.4, 0.8, LE);
 gamma_grid  = linspace(0.4, 0.8, LE);
 a_grid      = linspace(0.3, 0.8,LE); 
@@ -14,12 +14,11 @@ sigmaL_grid = linspace(0.01, 0.3, LE);
 
 parameters = combvec(rho_grid, gamma_grid, a_grid, b_grid, muH_grid, muL_grid, sigmaH_grid, sigmaL_grid )';
 n = LE^8;
-results = ones(n, 10);
+results = ones(n, 9);
 
 tic
-M = 24; % M specifies maximum number of workers
+M = 2; % M specifies maximum number of workers
   parfor (it = 1:n,M)
- 
  
 p = [];
  
