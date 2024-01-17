@@ -17,9 +17,9 @@ n = LE^8;
 results = ones(n, 9);
 
 tic
-M = 2; % M specifies maximum number of workers
-  parfor (it = 1:n,M)
- 
+%M = 2; % M specifies maximum number of workers
+%  parfor (it = 1:n,M)
+for it=1:n 
 p = [];
  
     % Moments to be matched
@@ -116,7 +116,7 @@ toc
 
 
 
-minimum = sortrows(results, 10);
+minimum = sortrows(results, 9);
 howmany = 10;
 bottom = minimum(1:howmany, :);
  
