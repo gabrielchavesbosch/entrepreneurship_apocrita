@@ -19,9 +19,10 @@ function [LSH, LD_HH, LD_LH, LD_IH, LSL, LD_HL, LD_LL, LD_IL] = labor_demand(wH,
     profitH = p.avecH.*kappa.*(   ( ( ((IzH.^gamma).*b + (LzH.^gamma)).*a).^(rho/gamma) + HzH.^rho ).^(alpha/rho)) - (HzH.*wH + LzH.*wL + IzH.*wI);
     wvecH = wH * ones(length(profitH), 1);
     LSH = sum(wvecH > profitH);
-    LD_HH = (profitH > wH)' * HzH;
-    LD_LH = (profitH > wH)' * LzH;
-    LD_IH = (profitH > wH)' * IzH;
+
+    LD_HH = sum(HzH(profitH > wH));
+    LD_LH = sum(LzH(profitH > wH));
+    LD_IH = sum(IzH(profitH > wH));
 
     % Low skill
     IzL =  ((p.avecL.* (alpha * J * G * a * b))./(wI)).^(1/(1-alpha));
@@ -30,10 +31,9 @@ function [LSH, LD_HH, LD_LH, LD_IH, LSL, LD_HL, LD_LL, LD_IL] = labor_demand(wH,
     profitL = p.avecL.*(   ( ( ((IzL.^gamma).*b + (LzL.^gamma)).*a).^(rho/gamma) + HzL.^rho ).^(alpha/rho)) - (HzL.*wH + LzL.*wL + IzL.*wI);
     wvecL = wL * ones(length(profitL), 1);
     LSL = sum(wvecL > profitL);
-    LD_HL = (profitL > wL)' * HzL;
-    LD_LL = (profitL > wL)' * LzL;
-    LD_IL = (profitL > wL)' * IzL;
-    
-end    
-    
-   
+
+    LD_HL = sum(HzL(profitL > wL));
+    LD_LL = sum(LzL(profitL > wL));
+    LD_IL = sum(IzL(profitL > wL));
+
+end
