@@ -156,11 +156,9 @@ for it = 1:n
     MS = [share_entrepreneur_H_b, share_entrepreneur_L_b, change_entrepreneur_H, change_entrepreneur_L...
         , rel_wage_H,  rel_wage_L, change_wage_H, change_wage_L, rel_wage_I];
 
-    % Q = (MS-Mhat)*W*(MS-Mhat)';
-
-    diffMS_Mhat = MS - Mhat; % Compute the difference once
-    scaledDiff = diffMS_Mhat ./ variances; % Element-wise scaling
-    Q = scaledDiff * scaledDiff'; % Equivalent to the original, but more efficient
+    diff = MS - Mhat;
+    weighted_diff = diff ./ variances;
+    Q = weighted_diff * diff';
 
 
     results(it,:) = [parameters(it,:), Q];
