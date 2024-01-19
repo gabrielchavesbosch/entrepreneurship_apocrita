@@ -53,7 +53,7 @@ tic
 
 parfor (it = 1:n, numWorkers)
 
-p = [];
+    p = [];
 
     % Moments to be matched
     p.data_share_entrepreneur_H_b   = 0.113;  % baseline, data
@@ -87,10 +87,13 @@ p = [];
     p.sigmaL = parameters(it,8);
     p.kappa = 1;
 
+    highAllocation = p.bins * (1 - p.shareL);
+    lowAllocation = p.bins * p.shareL;
+
         % distribution of a:
     % nr grid points
-    p.avecH = sort(lognrnd(p.muH,p.sigmaH,p.bins*(1-p.shareL),1));
-    p.avecL = sort(lognrnd(p.muL,p.sigmaL,p.bins*p.shareL,1));
+    p.avecH = sort(lognrnd(p.muH,p.sigmaH,highAllocation,1));
+    p.avecL = sort(lognrnd(p.muL,p.sigmaL,lowAllocation,1));
 
     % Before
     p.I = p.Ib;
@@ -99,8 +102,8 @@ p = [];
     wLb = xb(2);
     wIb = xb(3);
     [LSHb, LD_HHb, LD_LHb, LD_IHb, LSLb, LD_HLb, LD_LLb, LD_ILb] = labor_demand(wHb, wLb, wIb, p);
-    share_entrepreneur_H_b = (p.bins*(1-p.shareL) -(LSHb))/(p.bins*(1-p.shareL));
-    share_entrepreneur_L_b = (p.bins*(p.shareL) -  (LSLb))/(p.bins*(p.shareL));
+    share_entrepreneur_H_b = (highAllocation -(LSHb))/(highAllocation);
+    share_entrepreneur_L_b = (lowAllocation -  (LSLb))/(lowAllocation);
 
     % After
     p.I = p.Ia;
@@ -109,8 +112,8 @@ p = [];
     wLa = xa(2);
     wIa = xa(3);
     [LSHa, LD_HHa, LD_LHa, LD_IHa, LSLa, LD_HLa, LD_LLa, LD_ILa] = labor_demand(wHa, wLa, wIa, p);
-    share_entrepreneur_H_a = (p.bins*(1-p.shareL) -(LSHa))/(p.bins*(1-p.shareL));
-    share_entrepreneur_L_a = (p.bins*(p.shareL) -  (LSLa))/(p.bins*(p.shareL));
+    share_entrepreneur_H_a = (highAllocation -(LSHa))/(highAllocation);
+    share_entrepreneur_L_a = (lowAllocation -  (LSLa))/(lowAllocation);
 
     % Data moments
     Mhat = [p.data_share_entrepreneur_H_b, p.data_share_entrepreneur_L_b...
