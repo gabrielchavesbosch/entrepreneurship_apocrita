@@ -42,6 +42,15 @@ results = ones(n, 9);
 
 tic
 
+    % For now, diagonal matrix
+    variances = [1,0.5,0.1,0.1,1,0.1,1,1,1];
+    W = diag(variances)^-1 ;
+
+    %p.kappa = parameters(5);
+    options = optimset('Display','none');
+    x0 = [1,1,1];
+
+
 parfor (it = 1:n, numWorkers)
 
 p = [];
@@ -83,11 +92,6 @@ p = [];
     p.avecH = sort(lognrnd(p.muH,p.sigmaH,p.bins*(1-p.shareL),1));
     p.avecL = sort(lognrnd(p.muL,p.sigmaL,p.bins*p.shareL,1));
 
-    %p.kappa = parameters(5);
-    options = optimset('Display','none');
-    x0 = [1,1,1];
-
-
     % Before
     p.I = p.Ib;
     xb = fsolve(@excess_LD,x0, options, p);
@@ -126,10 +130,6 @@ p = [];
 
     MS = [share_entrepreneur_H_b, share_entrepreneur_L_b, change_entrepreneur_H, change_entrepreneur_L...
         , rel_wage_H,  rel_wage_L, change_wage_H, change_wage_L, rel_wage_I];
-
-    % For now, diagonal matrix
-    variances = [1,0.5,0.1,0.1,1,0.1,1,1,1];
-    W = diag(variances)^-1 ;
 
     Q = (MS-Mhat)*W*(MS-Mhat)';
 
