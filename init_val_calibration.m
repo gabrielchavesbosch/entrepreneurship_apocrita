@@ -25,30 +25,6 @@ else
     end
 end
 
-% Retrieve the number of slots from the environment variable
-numWorkersStr = getenv('NSLOTS');
-if isempty(numWorkersStr)
-    error('The NSLOTS environment variable is not set. Please set this variable to specify the number of parallel workers.');
-end
-
-% Convert the number of workers to a numeric value
-numWorkers = str2double(numWorkersStr);
-if isnan(numWorkers) || numWorkers < 1
-    error('Invalid value for NSLOTS. Please ensure it is a positive integer.');
-end
-
-% Create or use existing parallel pool
-poolobj = gcp('nocreate'); % Get current parallel pool without creating a new one
-if isempty(poolobj)
-    poolobj = parpool(numWorkers); % Create new parallel pool
-else
-    % Adjust the pool size to match NSLOTS if different
-    if poolobj.NumWorkers ~= numWorkers
-        delete(poolobj);
-        poolobj = parpool(numWorkers);
-    end
-end
-
 LE = 2;
 rho_grid    = linspace(0.4, 0.8, LE);
 gamma_grid  = linspace(0.4, 0.8, LE);
