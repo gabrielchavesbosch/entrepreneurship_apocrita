@@ -3,7 +3,7 @@
 #$ -j y
 #$ -pe smp 48
 #$ -l h_rt=24:0:0
-#$ -o running_hello.log
+#$ -o running.log
 #$ -m e
 echo "Job starting now."
 # load matlab module
