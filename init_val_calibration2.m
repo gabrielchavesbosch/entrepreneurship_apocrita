@@ -77,6 +77,8 @@ parfor (it = 1:n, numWorkers)
     % Rho and gamma (substitution parameters); a and b (rel. productivity low
     % skill and relative productivity immigrants); lognormal mean H, L and
     % lognormal stde H and L
+    
+    parameters = [0.35, 0.75, 0.6, 0.3, 0.45, 0.25, 0.01, 0.155]
     p.rho    = parameters(it, 1);
     p.gamma  = parameters(it, 2);
     p.d      = parameters(it, 3);
@@ -87,6 +89,8 @@ parfor (it = 1:n, numWorkers)
     p.sigmaL = parameters(it,8);
     p.kappa = 1;
 
+   
+    
     highAllocation = p.bins * (1 - p.shareL);
     lowAllocation = p.bins * p.shareL;
 
